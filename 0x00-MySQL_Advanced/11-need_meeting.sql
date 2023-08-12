@@ -6,5 +6,5 @@ CREATE VIEW need_meeting AS
     AND
     (last_meeting IS NULL
         OR
-        DATEDIFF(last_meeting, INTERVAL 1 MONTH + CURDATE()) <= INTERVAL 1 MONTH + CURDATE()
+        DATEDIFF(last_meeting, CURDATE()) <= 30
     );
