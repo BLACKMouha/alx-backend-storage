@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
 '''8-all module'''
+
 from pymongo.collection import Collection
-from pymongo.cursor import CursorType
+from typing import List
 
 
-def list_all(mongo_collection: Collection) -> CursorType:
+def list_all(mongo_collection: Collection) -> List:
     '''
     Lists all the documents of a MongoDB collection
     Arg:
