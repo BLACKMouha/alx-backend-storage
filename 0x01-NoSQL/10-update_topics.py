@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 '''10-update_topics module'''
 
-from pymongo.collection import Collection
-
 
 def update_topics(mongo_collection, name, topics):
     '''
