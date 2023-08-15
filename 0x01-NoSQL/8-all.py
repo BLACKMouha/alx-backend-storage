@@ -3,10 +3,10 @@
 '''8-all module'''
 
 from pymongo.collection import Collection
-from typing import List
+from pymongo.cursor import Cursor
 
 
-def list_all(mongo_collection: Collection) -> List:
+def list_all(mongo_collection: Collection) -> Cursor:
     '''
     Lists all the documents of a MongoDB collection
     Arg:
@@ -14,5 +14,4 @@ def list_all(mongo_collection: Collection) -> List:
     Return:
         a Python list of collection's documents if any
     '''
-    return [] if mongo_collection.count == 0\
-        else [doc for doc in mongo_collection.find()]
+    return mongo_collection.find()
