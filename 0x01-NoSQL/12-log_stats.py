@@ -23,5 +23,5 @@ if __name__ == '__main__':
     print(f"{m}PUT: {nginx_collection.count_documents(m_put)}")
     print(f"{m}PATCH: {nginx_collection.count_documents(m_pat)}")
     print(f"{m}DELETE: {nginx_collection.count_documents(m_del)}")
-    
+
     print(f"{nginx_collection.count_documents(m_get_status)} status check")
