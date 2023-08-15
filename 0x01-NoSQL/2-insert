@@ -1,3 +1,2 @@
 // 2-insert
-use my_db
 db.school.insert({"name": "Holberton school"})
