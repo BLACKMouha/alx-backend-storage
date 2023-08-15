@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-'''11-schools_by_topic module'''
+'''12-log_stats module'''
 
 from pymongo import MongoClient
 
