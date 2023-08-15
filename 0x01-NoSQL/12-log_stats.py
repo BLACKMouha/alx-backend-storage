@@ -9,40 +9,19 @@ if __name__ == '__main__':
     client = MongoClient()
     db = client.logs
     nginx_collection = db.nginx
-    all_logs = list_all(nginx_collection)
-    num_logs = nginx_collection.estimated_document_count()
-    logs_with_method_get = 0
-    logs_with_method_post = 0
-    logs_with_method_put = 0
-    logs_with_method_patch = 0
-    logs_with_method_delete = 0
-    logs_with_method_get_and_path_status = 0
-
-    print(num_logs, 'logs')
-    print('Methods:')
-
-    for log in all_logs:
-        if log.get('method') == 'GET':
-            logs_with_method_get += 1
-        elif log.get('method') == 'POST':
-            logs_with_method_post += 1
-        elif log.get('method') == 'PUT':
-            logs_with_method_put += 1
-        elif log.get('method') == 'PATCH':
-            logs_with_method_patch += 1
-        elif log.get('method') == 'DELETE':
-            logs_with_method_delete += 1
-        if log.get('method') == 'GET' and log.get('path') == '/status':
-            logs_with_method_get_and_path_status += 1
-
-    print('''\tmethod GET: {}
-        \b\tmethod POST: {}
-        \b\tmethod PUT: {}
-        \b\tmethod PATCH: {}
-        \b\tmethod DELETE: {}'''.format(logs_with_method_get,
-                                        logs_with_method_post,
-                                        logs_with_method_put,
-                                        logs_with_method_patch,
-                                        logs_with_method_delete))
-
-    print(logs_with_method_get_and_path_status, 'status check')
+    m = "\tmethod "
+    m_get = {'method': 'GET'}
+    m_pos = {'method': 'POST'}
+    m_put = {'method': 'PUT'}
+    m_pat = {'method': 'PATCH'}
+    m_del = {'method': 'DELETE'}
+    m_get_status = {'method': 'GET', 'path': '/status'}
+    print(f"{nginx_collection.estimated_document_count()} logs")
+    print("Methods:")
+    print(f"{m}GET: {nginx_collection.count_documents(m_get)}")
+    print(f"{m}POST: {nginx_collection.count_documents(m_pos)}")
+    print(f"{m}PUT: {nginx_collection.count_documents(m_put)}")
+    print(f"{m}PATCH: {nginx_collection.count_documents(m_pat)}")
+    print(f"{m}DELETE: {nginx_collection.count_documents(m_del)}")
+    
+    print(f"{nginx_collection.count_documents(m_get_status)} status check")
