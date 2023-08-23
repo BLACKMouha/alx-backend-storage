@@ -13,7 +13,19 @@ def count_calls(method: Callable) -> Callable:
     def wrapper(self, *args, **kwargs):
         '''Calls the method with its arguments'''
         self._redis.incr(method.__qualname__)
-        return method(self, *args, *kwargs)
+        return method(self, *args, **kwargs)
+    return wrapper
+
+
+def call_history(f: Callable) -> Callable:
+    '''Tracks a function call input paramters and outputs'''
+    @wraps(f)
+    def wrapper(self, *args, **kwargs):
+        '''Call the function with its arguments'''
+        self._redis.rpush(f.__qualname__ + ':inputs', str(args))
+        r = f(self, *args, **kwargs)
+        self._redis.rpush(f.__qualname__ + ':outputs', r)
+        return r
     return wrapper
 
 
@@ -25,6 +37,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         '''Generates a random key using uuid as a key to store the data in the
