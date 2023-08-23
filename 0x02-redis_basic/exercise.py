@@ -3,7 +3,7 @@
 
 import redis
 import uuid
-
+from typing import Union
 
 class Cache:
     '''Representation of a cache instance'''
@@ -13,7 +13,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    def store(self, data:[bytes, str, float, int]) -> str:
+    def store(self, data:Union[str, bytes, int, float]) -> str:
         '''Generates a random key using uuid as a key to store the data in the
         Redis storage'''
         k = str(uuid.uuid4())
