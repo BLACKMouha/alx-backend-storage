@@ -17,14 +17,14 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 
 
-def call_history(f: Callable) -> Callable:
+def call_history(method: Callable) -> Callable:
     '''Tracks a function call input paramters and outputs'''
-    @wraps(f)
+    @wraps(method)
     def wrapper(self, *args, **kwargs):
         '''Call the function with its arguments'''
-        self._redis.rpush(f.__qualname__ + ':inputs', str(args))
-        r = f(self, *args, **kwargs)
-        self._redis.rpush(f.__qualname__ + ':outputs', r)
+        self._redis.rpush(method.__qualname__ + ':inputs', str(args))
+        r = method(self, *args, **kwargs)
+        self._redis.rpush(method.__qualname__ + ':outputs', str(r))
         return r
     return wrapper
 
