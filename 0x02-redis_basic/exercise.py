@@ -30,6 +30,7 @@ def call_history(method: Callable) -> Callable:
 
 
 def replay(method: Callable) -> None:
+    '''Displays metrics based on the method calls history'''
     call_histories = redis.Redis()
     name = method.__qualname__
     inputs = call_histories.lrange(name + ':inputs', 0, -1)
