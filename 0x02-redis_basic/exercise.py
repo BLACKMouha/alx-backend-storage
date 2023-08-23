@@ -21,12 +21,14 @@ class Cache:
         self._redis.set(k, data)
         return k
 
-    def get(self, key: str, fn: Callable):
-        '''Retrieves and converts to the rigth the data based on the key'''
+    def get(self, key: str, fn: Callable = None):
+        '''Retrieves and Converts to the rigth the data based on the key'''
         try:
+            if not key:
+                return None
             return fn(self._redis.get(key)) if fn else self._redis.get(key)
         except Exception as e:
-            raise None
+            return None
 
     def get_str(self, key: str) -> str:
         '''Retrieves and stringfies data corresponding the key'''
