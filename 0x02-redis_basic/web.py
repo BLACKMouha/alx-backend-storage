@@ -25,12 +25,12 @@ def cache_content(func: Callable) -> Callable:
     @wraps(func)
     def wrapper(url, *args, **kwargs):
         '''Calls func with its arguments'''
-        content = cache.get(url)
+        key = f'cached:{url}'
+        content = cache.get(key)
         if content:
             return content.decode('utf-8')
         content = func(url, *args, **kwargs)
-        if cache.ttl(url) <= 0:
-            cache.setex(url, 10, content if content else '')
+        cache.setex(key, 10, content if content else '')
         return content
     return wrapper
 
