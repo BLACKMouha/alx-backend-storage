@@ -16,9 +16,9 @@ def count_cache(func: Callable) -> Callable:
     def wrapper(url):
         '''Calls func with its arguments'''
         cache.incr(f"count:{url}")
-        cached_html = cache.get(f"cached:{url}")
-        if cached_html:
-            return cached_html.decode('utf-8')
+        content = cache.get(f"cached:{url}")
+        if content:
+            return content.decode('utf-8')
         content = func(url)
         cache.setex(f"cached:{url}", 10, content)
         return content
