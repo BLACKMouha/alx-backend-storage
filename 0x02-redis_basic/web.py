@@ -29,7 +29,4 @@ def count_cache(func: Callable) -> Callable:
 @count_cache
 def get_page(url: str) -> str:
     '''Gets a page'''
-    try:
-        return requests.get(url).text
-    except Exception as e:
-        return None
+    return requests.get(url).text
