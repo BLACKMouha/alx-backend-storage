@@ -19,9 +19,9 @@ def count_cache(func: Callable) -> Callable:
         cached_html = cache.get(f"cached:{url}")
         if cached_html:
             return cached_html.decode('utf-8')
-        html = func(url)
-        cache.setex(f"cached:{url}", 10, html)
-        return html
+        content = func(url)
+        cache.setex(f"cached:{url}", 10, content)
+        return content
 
     return wrapper
 
