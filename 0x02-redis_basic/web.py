@@ -10,7 +10,6 @@ from functools import wraps
 cache = redis.Redis()
 
 
-
 def count_cache(func: Callable) -> Callable:
     '''Caches the content of a web page for 10 seconds'''
     @wraps(func)
